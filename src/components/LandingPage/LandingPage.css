@@ -1,0 +1,28 @@
+.container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .header {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .parkList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .parkItem {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .link {
+    text-decoration: none;
+    color: #333;
+  }
+  
