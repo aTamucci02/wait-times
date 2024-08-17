@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #43506b;
   min-height: 100vh;
 
 }
@@ -17,7 +17,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #2a3570;
   min-height: 10vh;
   max-height: 100vh;
   align-items: left;
