@@ -18,13 +18,13 @@
   .parkItem {
     margin: 20px 0;
     padding: 20px;
-    border: 1px solid #751111;
+    border: 1px solid #000;
     border-radius: 10px;
     background-color: #ffffff;
   }
   
   .link {
     text-decoration: none;
-    color: #ff6e6e;
+    color: #000;
   }
   

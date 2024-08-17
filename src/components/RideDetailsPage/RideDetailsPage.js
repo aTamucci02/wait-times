@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation  } from 'react-router-dom';
 import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './RideDetailsPage.css';
@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate for naviga
 
 function RideDetailsPage() {
   const { rideId } = useParams();
+  const location = useLocation(); // Access location object
+  const rideName = location.state?.rideName || 'Ride Details'; // Retrieve rideName from state
+
   const navigate = useNavigate(); // Initialize useNavigate
 
 
@@ -104,7 +107,7 @@ function RideDetailsPage() {
         ← {/* Simple arrow */}
       </div>
 
-      <h1 className="header">Ride Details</h1>
+      <h1 className="header">{rideName}</h1>
 
       {/* Line chart displaying the average wait times */}
       <div className="chart-container">

@@ -30,8 +30,12 @@ function LandingPage() {
       <ul className="parkList">
         {parks.map(park => (
           <li key={park.park_id} className="parkItem">
-            <Link to={`/park/${park.park_id}`} className="link">
-              <h2 style={{color: 'red'}}>{park.park_name}</h2>
+            <Link 
+              to={`/park/${park.park_id}`} 
+              state={{ parkName: park.park_name }} // Pass parkName through state
+              className="link"
+            >
+              <h2 style={{color: 'black'}}>{park.park_name}</h2>
               <p>Average Wait Time: {formatTime(park.average_wait_time)}</p>
             </Link>
           </li>
