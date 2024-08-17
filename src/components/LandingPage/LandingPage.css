@@ -1,5 +1,5 @@
 .container {
-    padding: 20px;
+    padding: 0px;
     text-align: center;
     background-color: rgb(78, 99, 165);
   }
@@ -7,7 +7,7 @@
   .header {
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: #ff6e6e !important; /* Forces the color to apply */
+    color: #ffffff !important; /* Forces the color to apply */
   }
   
   .parkList {

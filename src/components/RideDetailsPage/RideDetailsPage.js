@@ -3,22 +3,35 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './RideDetailsPage.css';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 function RideDetailsPage() {
   const { rideId } = useParams();
+  const navigate = useNavigate(); // Initialize useNavigate
+
 
   const [chartData, setChartData] = useState([]);
   const [fullData, setFullData] = useState([]); // Store all 5-minute intervals
   const [expandedHour, setExpandedHour] = useState(null); // Track which hour is expanded
+  const [maxWaitTime, setMaxWaitTime] = useState(100); // Default max
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/rides/${rideId}/average-wait-times/interval`)
       .then(response => {
         const data = response.data;
-        console.log(data)
+        console.log(data);
+
+        // Calculate the max wait time from the data
+        const maxWait = Math.max(...data.map(item => parseFloat(item.average_wait_time)));
+        console.log(maxWait)
+        const minWait = Math.min(...data.map(item => parseFloat(item.average_wait_time)));
+  
+        // Create chart data with necessary formatting
         const { plots, fullPlots } = createPlots(data);
         setChartData(plots);  // Data for the chart and hourly list
         setFullData(fullPlots); // Data for all 5-minute intervals
+        setMaxWaitTime(Math.round(parseFloat(maxWait) / 10) * 10);
+        console.log(maxWaitTime)
       })
       .catch(error => {
         console.error('Error fetching wait times:', error);
@@ -32,13 +45,9 @@ function RideDetailsPage() {
     return `${mins}m ${seconds}s`;
   };
 
-  // Helper function to shift and format the interval
+  // Simplified formatInterval function since times are already in Eastern Time
   const formatInterval = (interval) => {
     let [hour, minute] = interval.split(':').map(Number);
-    hour -= 2; // Shift time back by 2 hours
-    if (hour < 0) {
-      hour += 24; // Adjust for midnight wrap-around
-    }
     const period = hour >= 12 ? 'PM' : 'AM';
     const formattedHour = hour % 12 || 12; // Convert to 12-hour format, treating 0 as 12
     return `${formattedHour}:${minute < 10 ? `0${minute}` : minute} ${period}`;
@@ -54,11 +63,13 @@ function RideDetailsPage() {
       const adjustedInterval = adjustInterval(index, startHour);
       const formattedInterval = formatInterval(adjustedInterval);
 
+      const waitTime = parseFloat(parseFloat(waitTimes[index].average_wait_time).toFixed(2));
+
       // Push all intervals into fullPlots
       fullPlots.push({
         time: adjustedInterval,
         displayTime: formattedInterval,
-        averageWait: waitTimes[index].average_wait_time,
+        averageWait: waitTime,
       });
 
       // Only push the top of the hour to plots
@@ -66,18 +77,12 @@ function RideDetailsPage() {
         plots.push({
           time: adjustedInterval,
           displayTime: formattedInterval,
-          averageWait: waitTimes[index].average_wait_time,
+          averageWait: waitTime,
         });
       }
     }
 
     return { plots, fullPlots };
-  };
-
-  // Helper function to check if the time is between 8 AM and 10 PM
-  const isWithinOperatingHours = (interval) => {
-    const [hour] = interval.split(':').map(Number);
-    return hour >= 8 && hour < 22; // 8 AM to 10 PM is 8:00 to 21:59
   };
 
   // Helper function to adjust the interval to start at 8 AM
@@ -94,18 +99,33 @@ function RideDetailsPage() {
 
   return (
     <div className="container">
-      <h1 className="header">test</h1>
+      {/* Back Button */}
+      <div className="back-button" onClick={() => navigate(-1)}>
+        ← {/* Simple arrow */}
+      </div>
+
+      <h1 className="header">Ride Details</h1>
 
       {/* Line chart displaying the average wait times */}
       <div className="chart-container">
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="displayTime" interval={0} /> {/* Ensure all labels are shown */}
-            <YAxis />
-            <Tooltip />
+            <XAxis dataKey="displayTime" interval={0} tick={{ fill: 'white', fontSize: 12 }}  /> {/* Ensure all labels are shown */}
+            <YAxis domain={[0, maxWaitTime]} tick={{ fill: 'white', fontSize: 12 }} /> {/* Customize the text color and size */}            
+            <Tooltip 
+            contentStyle={{ backgroundColor: '#222', borderRadius: '5px' }}
+            labelStyle={{ color: '#fff' }}
+            itemStyle={{ color: '#fff' }}
+            />
             <Legend />
-            <Line type="monotone" dataKey="averageWait" stroke="#8884d8" activeDot={{ r: 8 }} />
+              <Line 
+              type="monotone" 
+              dataKey="averageWait" 
+              stroke="white" 
+              activeDot={{ r: 8 }} 
+              name="Average Wait"  // Change this to the desired two-word label
+              />          
           </LineChart>
         </ResponsiveContainer>
       </div>
@@ -113,7 +133,7 @@ function RideDetailsPage() {
       <ul className="timeList">
         {chartData.map((hourData, hourIndex) => (
           <li key={hourIndex} className="hourItem">
-            <div onClick={() => toggleExpand(hourIndex)}>
+            <div onClick={() => toggleExpand(hourIndex)} style={{cursor: 'pointer'}}>
               <strong>{hourData.displayTime}</strong>: {formatTime(hourData.averageWait)}
             </div>
             {expandedHour === hourIndex && (
