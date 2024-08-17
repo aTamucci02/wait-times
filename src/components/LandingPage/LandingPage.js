@@ -8,7 +8,7 @@ function LandingPage() {
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/parks/average-wait-times`)
-    .then(response => {
+      .then(response => {
         console.log('API Response:', response.data); // Log the data to the console
         setParks(response.data);
       })
@@ -16,7 +16,13 @@ function LandingPage() {
         console.error('Error fetching park data:', error);
       });
   }, []);
-  
+
+  // Helper function to convert minutes to minutes and seconds
+  const formatTime = (minutes) => {
+    const mins = Math.floor(minutes);
+    const seconds = Math.round((minutes - mins) * 60);
+    return `${mins}m ${seconds}s`;
+  };
 
   return (
     <div className="container">
@@ -26,7 +32,7 @@ function LandingPage() {
           <li key={park.park_id} className="parkItem">
             <Link to={`/park/${park.park_id}`} className="link">
               <h2>{park.park_name}</h2>
-              <p>Average Wait Time: {park.average_wait_time} minutes</p>
+              <p>Average Wait Time: {formatTime(park.average_wait_time)}</p>
             </Link>
           </li>
         ))}
