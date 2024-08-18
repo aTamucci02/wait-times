@@ -70,6 +70,9 @@ function ParkPage() {
           </li>
         ))}
       </ul>
+      <footer className="footer">
+        <p>Powered by <a href="https://queue-times.com/en-US/pages/api" target="_blank" rel="noopener noreferrer">Queue Times</a></p>
+      </footer>
     </div>
   );
 }

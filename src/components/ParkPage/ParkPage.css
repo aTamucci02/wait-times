@@ -39,3 +39,19 @@
   .back-button:hover {
     color: #888; /* Change color on hover to indicate it's clickable */
   }
+
+  .footer {
+    position: fixed !important;
+    bottom: 10px;
+    left: 10px;
+    font-size: 14px;
+  }
+  
+  .footer a {
+    color: #0000EE; /* Standard link color */
+    text-decoration: none;
+  }
+  
+  .footer a:hover {
+    text-decoration: underline;
+  }
