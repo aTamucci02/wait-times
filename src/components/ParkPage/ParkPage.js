@@ -16,7 +16,7 @@ function ParkPage() {
     axios.get(`${process.env.REACT_APP_API_URL}/parks/${parkId}/rides/current-and-average-wait-times`)
       .then(response => {
         const ridesData = response.data.map(ride => {
-          const waitTimeDifference = ride.current_wait_time - ride.average_wait_time;
+          const waitTimeDifference =  ride.average_wait_time - ride.current_wait_time;
           return { ...ride, waitTimeDifference };
         });
 
