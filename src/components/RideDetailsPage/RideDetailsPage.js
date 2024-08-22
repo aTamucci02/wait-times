@@ -110,8 +110,8 @@ function RideDetailsPage() {
       <h1 className="header">{rideName}</h1>
 
       {/* Line chart displaying the average wait times */}
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={400}>
+      <div style={{ backgroundColor: 'rgba(100, 100, 100, 0.7)', padding: '10px', borderRadius: '5px' }}> {/* Black background with padding and rounded corners */}
+      <ResponsiveContainer width="100%" height={400}>
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="displayTime" interval={0} tick={{ fill: 'white', fontSize: 12 }}  /> {/* Ensure all labels are shown */}
@@ -127,7 +127,7 @@ function RideDetailsPage() {
               dataKey="averageWait" 
               stroke="white" 
               activeDot={{ r: 8 }} 
-              name="Average Wait"  // Change this to the desired two-word label
+              name="Average Wait"
               />          
           </LineChart>
         </ResponsiveContainer>
@@ -153,6 +153,8 @@ function RideDetailsPage() {
           </li>
         ))}
       </ul>
+      <div style={{ height: '30px' }} /> {/* Spacer element */}
+
       <footer className="footer">
         <p>Powered by <a href="https://queue-times.com/en-US/pages/api" target="_blank" rel="noopener noreferrer">Queue Times</a></p>
       </footer>
