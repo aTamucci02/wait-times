@@ -1,46 +1,57 @@
+body {
+  background-image: url('../../../public/backgrounds/HomePage.JPG');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  color: #ffffff;
+}
+
 .container {
-    padding: 0px;
-    text-align: center;
-    background-color: rgb(78, 99, 165);
-  }
-  
-  .header {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #ffffff !important; /* Forces the color to apply */
-  }
-  
-  .parkList {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .parkItem {
-    margin: 20px 0;
-    padding: 20px;
-    border: 1px solid #000;
-    border-radius: 10px;
-    background-color: #ffffff;
-  }
-  
-  .link {
-    text-decoration: none;
-    color: #000;
-  }
-  
-  .footer {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    font-size: 14px;
-  }
-  
-  .footer a {
-    color: #0000EE; /* Standard link color */
-    text-decoration: none;
-  }
-  
-  .footer a:hover {
-    text-decoration: underline;
-  }
-  
+  padding: 0px;
+  text-align: center;
+  height: 100vh; /* Ensure the container covers the full height of the viewport */
+}
+
+.header {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #ffffff !important; /* Forces the color to apply */
+}
+
+.parkList {
+  list-style: none;
+  padding: 0;
+}
+
+.parkItem {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+
+.link {
+  text-decoration: none;
+  color: #000;
+}
+
+.footer {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 14px;
+}
+
+.footer a {
+  color: #0000EE; /* Standard link color */
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}

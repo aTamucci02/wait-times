@@ -24,6 +24,16 @@ function LandingPage() {
     return `${mins}m ${seconds}s`;
   };
 
+  
+  useEffect(() => {
+    document.body.style.backgroundImage = "url('/backgrounds/HomePage.JPG')";
+
+    return () => {
+      // Clear the background when navigating away from the landing page
+      document.body.style.backgroundImage = '';
+    };
+  }, []);
+
   return (
     <div className="container">
       <h1 className="header">Disney Park Average Wait Times</h1>
