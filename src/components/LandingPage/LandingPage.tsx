@@ -4,8 +4,15 @@ import { Link } from 'react-router-dom';
 import './LandingPage.css';
 import Header from '../Header/Header';
 
-function LandingPage() {
-  const [parks, setParks] = useState([]);
+// Define the type for each park
+interface Park {
+  park_id: number;
+  park_name: string;
+  average_wait_time: number;
+}
+
+const LandingPage: React.FC = () => {
+  const [parks, setParks] = useState<Park[]>([]);
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/parks/average-wait-times`)
@@ -19,13 +26,12 @@ function LandingPage() {
   }, []);
 
   // Helper function to convert minutes to minutes and seconds
-  const formatTime = (minutes) => {
+  const formatTime = (minutes: number): string => {
     const mins = Math.floor(minutes);
     const seconds = Math.round((minutes - mins) * 60);
     return `${mins}m ${seconds}s`;
   };
 
-  
   useEffect(() => {
     document.body.style.backgroundImage = "url('/backgrounds/HomePage.JPG')";
 
