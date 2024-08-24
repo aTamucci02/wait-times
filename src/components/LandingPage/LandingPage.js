@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
+import Header from '../Header/Header';
 
 function LandingPage() {
   const [parks, setParks] = useState([]);
@@ -36,7 +37,7 @@ function LandingPage() {
 
   return (
     <div className="container">
-      <h1 className="header">Disney Park Average Wait Times</h1>
+      <Header /> {/* Add the Header component here */}
       <ul className="parkList">
         {parks.map(park => (
           <li key={park.park_id} className="parkItem">
